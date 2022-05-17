@@ -1,0 +1,220 @@
+name: MUtilities
+author: Machigan
+main: be.machigan.mutilities.MUtilities
+version: BETA
+api-version: 1.16
+
+
+commands:
+  mutils:
+    aliases:
+      - mutilities
+    description: Basic command of the plugin
+    usage: Error with mutils argument
+  reaction:
+    aliases:
+      - react
+      - reactions
+      - réaction
+      - réactions
+    description: Basic command of the reaction module
+    usage: Error with react argument or the module is disabled
+  salary:
+    aliases:
+      - salaire
+      - salaires
+      - salaries
+    description: Basic command of the salary module
+    usage: Error with salary argument or the module is disabled
+  survey:
+    aliases:
+      - sondage
+    description: Basic command of the survey module
+    usage: Error with the survey argument or the module is disabled
+  colorname:
+    description: Basic command of the colorname module
+    usage: Error with the colorname argument or the module is disabled
+  task:
+    aliases:
+      - tache
+      - taches
+    description: Basic command of the task module
+    usage: Error with the task argument or the module is disabled
+  prout:
+    description: basic command of the prout module
+    usage: Error with the prout module or the module is disabled
+  auction:
+    aliases:
+      - enchere
+      - encheres
+    description: Basic command of the auction module
+    usage: Error with the auction argument or the module is disabled
+
+permissions:
+
+  mutils.*:
+    description: allow player to have all the permissions of the plugin
+    default: false
+    children:
+      mutils.command.*: true
+      mutils.reaction.*: true
+      mutils.survey.*: true
+      mutils.colorname.*: true
+      mutils.task.*: true
+      mutils.prout.*: true
+      mutils.auction.*: true
+      mutils.salary.*: true
+
+  mutils.command.*:
+    description: allow player to use all arguments of the mutilities command
+    default: false
+    children:
+      mutils.command.use: true
+      mutils.command.prefix: true
+      mutils.command.reloadconfig: true
+      mutils.command.enable: true
+      mutils.command.disable: true
+  mutils.reaction.*:
+    description: allow player to use all arguments of the reaction command
+    default: false
+    children:
+      mutils.reaction.use: true
+      mutils.reaction.see.top: true
+      mutils.reaction.see.me: true
+      mutils.reaction.start: true
+  mutils.survey.*:
+    description: allow player to use all arguments of the survey command
+    default: false
+    children:
+      mutils.survey.use: true
+      mutils.survey.create: true
+      mutils.survey.vote: true
+      mutils.survey.stop: true
+      mutils.survey.history: true
+  mutils.colorname.*:
+    description: allow player to use all arguments of the colorname command
+    default: false
+    children:
+      mutils.colorname.use: true
+      mutils.colorname.me: true
+      mutils.colorname.other: true
+  mutils.task.*:
+    description: allow player to use all arguments of the task command
+    default: false
+    children:
+      mutils.task.use: true
+      mutils.task.me: true
+      mutils.task.info: true
+      mutils.task.start: true
+  mutils.prout.*:
+    description: allow player to use all arguments of the prout command
+    default: false
+    children:
+      mutils.prout.use: true
+  mutils.auction.*:
+    description: allow player to use all arguments of the auction command
+    default: false
+    children:
+      mutils.auction.use: true
+      mutils.auction.create: true
+      mutils.auction.item: true
+      mutils.auction.overbid: true
+      mutils.auction.stop: true
+  mutils.salary.*:
+    description: allow player to use all the arguments of the salary command
+    default: false
+    children:
+      mutils.salary.use: true
+      mutils.salary.add: true
+      mutils.salary.remove: true
+
+  mutils.command.use:
+    description: allow player to use the command /mutils
+    default: op
+  mutils.command.prefix:
+    description: allow player to change the prefix of a module
+    default: op
+  mutils.command.reloadconfig:
+    description: allow player to reload the config of the plugin
+    default: op
+  mutils.command.enable:
+    description: allow player to enable the module
+    default: op
+  mutils.command.disable:
+    description: allow player to disable a module
+    default: op
+  mutils.survey.use:
+    description: allow playe to use the command /survey
+    default: true
+  mutils.survey.create:
+    description: allow player to create survey
+    default: true
+  mutils.survey.vote:
+    description: allow player to vote for a survey
+    default: true
+  mutils.survey.stop:
+    description: allow player to stop a survey
+    default: op
+  mutils.survey.history:
+    description: allow player to see survey history
+    default: true
+  mutils.colorname.use:
+    description: allow player to use the colorname command
+    default: false
+  mutils.colorname.me:
+    description: allow player to change his colorname
+    default: false
+  mutils.colorname.other:
+    description: allow player to change the colorname of the other player
+    default: false
+  mutils.task.use:
+    description: allow player to use the command /task
+    default: true
+  mutils.task.me:
+    description: allow player to see his stats
+    default: true
+  mutils.task.info:
+    description: allow player to sees stats of other player
+    default: true
+  mutils.task.start:
+    description: allow player to start a new task game
+    default: op
+  mutils.prout.use:
+    description: allow player to use the command /prout
+    default: false
+  mutils.auction.use:
+    description: allow player to use the command /auction
+    default: true
+  mutils.auction.create:
+    description: allow player to create an auction
+    default: true
+  mutils.auction.item:
+    description: allow player to see the item of the auction
+    default: true
+  mutils.auction.overbid:
+    description: allow player to overbid an auction
+    default: true
+  mutils.auction.stop:
+    description: allow player to stop an auction
+    default: op
+  mutils.salary.use:
+    description: allow player to use the cmmande /salary
+    default: op
+  mutils.salary.add:
+    description: allow player to add a player to a salary
+    default: op
+  mutils.salary.remove:
+    description: allow player to remove a player from a salary
+    default: op
+  mutils.reaction.use:
+    description: allow player to use the command /react
+    default: true
+  mutils.reaction.see.top:
+    description: allow player to see the top winner of the reaction game
+    default: true
+  mutils.reaction.see.me:
+    description: allow player to see his stats
+    default: true
+  mutils.reaction.start:
+    description: allow player to start a new reaction game
+    default: op
