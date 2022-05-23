@@ -1,7 +1,7 @@
 name: MUtilities
 author: Machigan
 main: be.machigan.mutilities.MUtilities
-version: BETA
+version: 1.0.0
 api-version: 1.16
 database: false
 depend:
