@@ -7,7 +7,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-//TODO: faire en sorte que le prefix se reload
 public class CommandMutils implements CommandExecutor {
 
     @Override

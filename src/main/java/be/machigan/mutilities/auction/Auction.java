@@ -83,8 +83,8 @@ public class Auction {
         config.set("actual.end", endS);
         config.save(FILE);
         Date endD = Const.DATE_FORMAT.parse(endS);
-        Timer t = new Timer();
-        t.schedule(new TimerAuction(), endD);
+        TimerAuction.TIMER = new Timer();
+        TimerAuction.TIMER.schedule(new TimerAuction(), endD);
         inAuction = true;
 
     }

@@ -101,8 +101,8 @@ public class Survey {
 
 
         Date endD = Const.DATE_FORMAT.parse(endS);
-        Timer t = new Timer();
-        t.schedule(new TimerSurvey(), endD);
+        TimerSurvey.TIMER = new Timer();
+        TimerSurvey.TIMER.schedule(new TimerSurvey(), endD);
     }
 
     public static void vote(String vote, String player) throws IOException {

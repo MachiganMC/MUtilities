@@ -1,5 +1,6 @@
 package be.machigan.mutilities.colorname;
 
+import be.machigan.mutilities.utils.Const;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,6 +14,10 @@ public class ReloadColorname implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (!Const.CONFIG.getBoolean("colorname.use")) {
+            return;
+        }
+
         FileConfiguration config = YamlConfiguration.loadConfiguration(Colorname.FILE);
         List<String> allPlayer = config.getStringList("list");
         if (allPlayer.contains(e.getPlayer().getUniqueId().toString())) {

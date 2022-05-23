@@ -10,6 +10,7 @@ import be.machigan.mutilities.colorname.ReloadColorname;
 import be.machigan.mutilities.colorname.TabColorname;
 import be.machigan.mutilities.command.CommandMutils;
 import be.machigan.mutilities.notif.Notification;
+import be.machigan.mutilities.papi.PapiMUtils;
 import be.machigan.mutilities.prout.CommandProut;
 import be.machigan.mutilities.prout.Prout;
 import be.machigan.mutilities.prout.TabProut;
@@ -31,6 +32,7 @@ import be.machigan.mutilities.task.TabTask;
 import be.machigan.mutilities.task.Task;
 import be.machigan.mutilities.utils.Const;
 import be.machigan.mutilities.utils.Tools;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -76,6 +78,12 @@ public class MUtilities extends JavaPlugin {
         getCommand("auction").setTabCompleter(new TabAuction());
         getServer().getPluginManager().registerEvents(new GUIAuction(), this);
         getServer().getPluginManager().registerEvents(new OnJoinAuction(), this);
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceHolderAPI") != null) {
+            new PapiMUtils().register();
+            Tools.log("The PlaceHolders has been registered");
+        }
+
         if (Const.CONFIG.getBoolean("reaction.enabled")) {
             if (Reaction.REACTIONS_GAME.isEmpty()) {
                 Tools.log("No reaction game has been record", Const.LOG_WARNING);

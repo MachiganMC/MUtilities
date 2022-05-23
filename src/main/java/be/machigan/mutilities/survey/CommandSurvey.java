@@ -194,6 +194,8 @@ public class CommandSurvey implements CommandExecutor {
                         .replace("{sender}", commandSender.getName()));
                 return true;
             }
+            Survey.isSurvey = false;
+            TimerSurvey.TIMER.cancel();
             commandSender.sendMessage(Tools.configColor("survey.message.arg.stop.success").replace("{prefix}", Survey.PREFIX)
                     .replace("{sender}", commandSender.getName()).replace("{survey}", Survey.SURVEY));
             Bukkit.getServer().broadcastMessage(Tools.configColor("survey.message.stop").replace("{prefix}", Survey.PREFIX));

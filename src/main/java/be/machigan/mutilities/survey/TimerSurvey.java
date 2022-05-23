@@ -14,6 +14,7 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 public class TimerSurvey extends TimerTask {
+    public static Timer TIMER;
 
     @Override
     public void run() {
@@ -39,7 +40,7 @@ public class TimerSurvey extends TimerTask {
     public static void reload() throws ParseException {
         FileConfiguration config = YamlConfiguration.loadConfiguration(Survey.FILE);
         Date end = Const.DATE_FORMAT.parse(config.getString("actual.end"));
-        Timer t = new Timer();
-        t.schedule(new TimerSurvey(), end);
+        TIMER = new Timer();
+        TIMER.schedule(new TimerSurvey(), end);
     }
 }

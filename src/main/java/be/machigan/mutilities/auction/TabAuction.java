@@ -34,6 +34,9 @@ public class TabAuction implements TabCompleter {
             if (commandSender.hasPermission("mutils.auction.overbid")) {
                 arg.add("overbid");
             }
+            if (commandSender.hasPermission("mutils.auction.stop")) {
+                arg.add("stop");
+            }
             arg.add("claim");
 
             StringUtil.copyPartialMatches(strings[0], arg, tab);

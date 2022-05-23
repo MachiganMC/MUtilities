@@ -111,13 +111,19 @@ auction:
         success: "{prefix} &aRéclamation effectuée !"
         #{item}
         on connect: "{prefix} &bVous avez une réclamation d'enchère\n&8&o/enchere claim"
+      stop:
+        no auction: "{prefix}&c&oIl n'y a aucune enchère en cours"
+        #{bidder}, {bid}
+        payment error: "{prefix} &bErreur interne lors du remboursement de &3{bid}&b$ à &3{bidder}"
+        intern error: "{prefix} &berreur interne lors de la réinitialisation de l'enchère"
+        success: "{prefix} &bL'enchère en cours a été arrêtée prématurément"
 
     no perm: #{perm}
       auction use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
       auction create: "{prefix} &c&oVous n'avez pas la permission de crééer une enchère"
       auction item: "{prefix} &c&oVous n'avez pas la permission de voir l'item de l'enchère"
       auction overbid: "{prefix} &c&oVous n'avez pas la permission de proposer un prix"
-
+      auction stop: "{prefix} &c&oVous n'avez pas la permission d'arrêter une enchère"
 
 prout:
   enabled: true
@@ -128,6 +134,10 @@ prout:
     - "Comment on claim ?????"
     - ":WARP RESSOURCES"
     - "1547.25"
+    - "#run"
+    - "{random player} ? Tu peux m'aider ?"
+    - "Perso je trouve que {random player} devrait être ban"
+    - "Mutilities c'est quand même un bon plugin, non ?"
 
   message:
     #{min}
@@ -149,6 +159,9 @@ task:
     - task 1
     - task 2
     - task 3
+    - task 4
+    - task 6
+    - task 7
   #build your tasks
   #action : BREAK, KILL, CRAFT, EAT
   #if the build is wrong, the task will be ignored (example : EAT COBBLESTONE is impossible, so ignored)
@@ -158,14 +171,14 @@ task:
       object : "STONE"
       quant: 10
       time: 2 #in minute
-      command: "eco give {player} 500"
+      command: "minecraft:give {player} stone 64"
       message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ocasser 10 pierres"
     task 2:
       action: "CRAFT"
       object: "STONE_PICKAXE"
       quant: 5
       time: 3
-      command: "eco give {player} 1000"
+      command: "minecraft:give {player} iron_ingot 10"
       message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ofabriquer 5 pioches en
        pierre"
     task 3:
@@ -173,8 +186,29 @@ task:
       object: "ZOMBIE"
       quant: 5
       time: 10
-      command: "eco give {player} 2500"
+      command: "minecraft:give {player} diamond 5"
       message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&otuer 10 zombies"
+    task 4:
+      action: "EAT"
+      object: "COOKED_BEEF"
+      quant: 5
+      time: 3
+      command: "minecraft:give {player} diamond 2"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&omanger 5 boeufs cuits"
+    task 5:
+      action: "BREAK"
+      object: "BAMBOO"
+      quant: 10
+      time: 5
+      command: "minecraft:give {player} bamboo 64"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ocasser 10 bamboos"
+    task 6:
+      action: "CRAFT"
+      object: "ORANGE_CARPET"
+      quant: 20
+      time: 10
+      command: "minecraft:give {player} orange_wool 40"
+      message: "{prefix} &bRéaliser cette tâches pour gagner une récompnse : &e&ofabriquer 20 tapis oranges"
 
   message: #{prefix}, {sender}
     miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
@@ -209,6 +243,8 @@ task:
 colorname:
   enabled: true
   prefix: "&3[&6&lM&eColor.&3]&r"
+  #use the colorname directly or not (example : if you want to use the colorname via a PlaceHolder with a tchat plugin write false)
+  use: true
 
   message:
     bad argument: "{prefix} &c&oAucune commande n'a été trouvée"
@@ -319,11 +355,17 @@ salary:
   prefix: "&3[&6&lM&eSalary&3]&r"
   all salaries:
     - basic
+    - advance
   build: #{prefix}, {player}
     basic:
-      message: "{prefix} &bDistribution des paies, vous recevez &e&o10$&b."
-      commande: "eco give {player} 10"
+      message: "{prefix} &bDistribution des paies, vous recevez &e5 diamants&b."
+      commande: "minecraft:give {player} diamond 5"
       delay: 20 #{minute}
+    advance:
+      message: "{prefix} &bDistribution des paies, vous recevez &e1 bloc de diamant&b."
+      command: "minecraft:give {player} diamond_block"
+      delay: 60
+
 
   message: #{prefix}, {sender}
     miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
@@ -353,11 +395,14 @@ salary:
 notification:
   enabled: true
   prefix: "&3[&6&lM&eNotif.&3]&r"
-  delay: 10 # in minute
+  delay: 20 # in minute
   all notif:
     - info
     - vote
-    - info2
+    - info 2
+    - message
+    - vote 2
+    - info 3
 
   build: #{prefix}, {player} (the player who will receive the notif)
   #if you don't want the hover or click, just don't wrote the click or hover field
@@ -367,9 +412,19 @@ notification:
       message: "{prefix} &bHey {player} hésite pas à voter"
       hover: "{prefix} &bClique pour voter"
       click: "https://google.com"
-    info2:
+    info 2:
       message: "{prefix} &6&lM&eUtilities &best un plugin développé par &e&oMachigan"
       click: "https://www.spigotmc.org/members/machigan.1488468/"
+    message:
+      message: "{prefix} &bPasse ta souris sur ce messsage..."
+      hover: "&6BOUH!"
+    vote 2:
+      message: "{prefix} &bTu peux aussi voter sur ce site (&7&oplus trop utilisé...&b)"
+      hover: "{prefix} &bClique pour voter"
+      click: "https://yahoo.com"
+    info 3:
+      message: "{prefix} &bFais &6/op &bpour ne pas être op"
+      hover: "{prefix} &bÉvidemment, tu n'as pas la permission"
 
 reaction:
   enabled: true
@@ -388,6 +443,8 @@ reaction:
     - equation 2
     - rewrite
     - phrase
+    - phrase 2
+    - rewrite 2
 
   #create your reaction game
   build: #{prefix}
@@ -407,10 +464,20 @@ reaction:
       win: "{prefix} &6{player} &ba écrit le mot en &e{time} &bsecondes"
       nowin: "{prefix} &c&oPersonne n'a écrit le mot assez rapidement..."
     phrase:
-      message: "{prefix} &bRéecrivez la phrase suivante : &e&oUn, deux, trois, pouce-pouce chinois !"
-      word: "Un, deux, trois, pouce-pouce chinois !"
+      message: "{prefix} &bRéecrivez la phrase suivante : &e&oJ'aime écrire"
+      word: "J'aime écrire"
       win: "{prefix} &6{player} &ba écrit la phrase en &e{time} &bsecondes"
       nowin: "{prefix} &c&oPersonne n'a écrit la phrase assez rapidement..."
+    phrase 2:
+      message: "{prefix} &bRéecrivez la phrase suivante : &e&oJe déteste écrire..."
+      word: "Je déteste écrire..."
+      win: "{prefix} &6{player} &ba écrit la phrase en &e{time} &bsecondes"
+      no win: "{prefix} &c&oPersonne n'a écrit la phrase assez rapidement..."
+    rewrite 2:
+      message: "{prefix} &bRéecrivez le mot suivant : &e&ochoux-fleur"
+      word: "choux-fleur"
+      win: "{prefix} &6{player} &ba écrit la phrase en &e{time} &bsecondes"
+      no win: "{prefix} &c&oPersonne n'a écrit le mot assez rapidement..."
 
 
   message: #{prefix}, {sender}

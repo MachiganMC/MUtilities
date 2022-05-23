@@ -62,7 +62,6 @@ public class Task {
         if (inGame) {
             return;
         }
-
         task = taskList.get(new Random().nextInt(taskList.size()));
         time = Const.CONFIG.getInt("task.build." + task + ".time");
         action = Const.CONFIG.getString("task.build." + task + ".action").toUpperCase();

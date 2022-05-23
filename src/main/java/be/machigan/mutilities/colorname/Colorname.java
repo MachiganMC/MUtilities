@@ -34,8 +34,10 @@ public class Colorname {
     }
 
     public static void reset(Player player) {
-        player.setDisplayName(player.getName() + ChatColor.RESET);
-        player.setPlayerListName(player.getName() + ChatColor.RESET);
+        if (Const.CONFIG.getBoolean("colorname.use")) {
+            player.setDisplayName(player.getName() + ChatColor.RESET);
+            player.setPlayerListName(player.getName() + ChatColor.RESET);
+        }
         FileConfiguration config = YamlConfiguration.loadConfiguration(FILE);
         List<String> allPlayer = config.getStringList("list");
         allPlayer.remove(player.getUniqueId().toString());
@@ -49,8 +51,10 @@ public class Colorname {
     }
 
     public static void set(Player player, String colorCode) {
-        player.setDisplayName(colorCode + player.getName() + ChatColor.RESET);
-        player.setPlayerListName(colorCode + player.getName() + ChatColor.RESET);
+        if (Const.CONFIG.getBoolean("colorname.use")) {
+            player.setDisplayName(colorCode + player.getName() + ChatColor.RESET);
+            player.setPlayerListName(colorCode + player.getName() + ChatColor.RESET);
+        }
         FileConfiguration config = YamlConfiguration.loadConfiguration(FILE);
         List<String> allPlayer = config.getStringList("list");
         if (!allPlayer.contains(player.getUniqueId().toString())) {

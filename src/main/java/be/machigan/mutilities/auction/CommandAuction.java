@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.UUID;
 
 public class CommandAuction implements CommandExecutor {
 
@@ -247,6 +248,46 @@ public class CommandAuction implements CommandExecutor {
                     .replace("{sender}", commandSender.getName()).replace("{item}", item.toString()));
             return true;
 
+        }
+
+        if (strings[0].equalsIgnoreCase("stop")) {
+            if (!commandSender.hasPermission("mutils.auction.stop")) {
+                commandSender.sendMessage(Tools.configColor("auction.message.no perm.auction stop").replace("{prefix}", Auction.PREFIX)
+                        .replace("{sender}", commandSender.getName()).replace("{perm}", "mutils.auction.stop"));
+                return true;
+            }
+            if (!Auction.inAuction) {
+                commandSender.sendMessage(Tools.configColor("auction.message.arg.no auction").replace("{prefix}", Auction.PREFIX)
+                        .replace("{sender}", commandSender.getName()));
+                return true;
+            }
+            FileConfiguration config = YamlConfiguration.loadConfiguration(Auction.FILE);
+            List<String> allPlayer = config.getStringList("all player");
+            if (!allPlayer.contains(Auction.creator)) {
+                allPlayer.add(Auction.creator);
+                config.set("all player", allPlayer);
+            }
+            if (Auction.bidder != null) {
+                if (!Tools.pay(Bukkit.getOfflinePlayer(UUID.fromString(Auction.bidder)), Auction.bid)) {
+                    commandSender.sendMessage(Tools.configColor("auction.message.arg.stop.payment error").replace("{prefix}", Auction.PREFIX)
+                            .replace("{sender}", commandSender.getName()).replace("{bid}", Double.toString(Auction.bid))
+                            .replace("{bidder}", Bukkit.getOfflinePlayer(UUID.fromString(Auction.bidder)).getName()));
+                }
+            }
+            config.set("claim." + Auction.creator, Auction.item);
+            config.set("actual", null);
+            try {
+                config.save(Auction.FILE);
+            } catch (IOException ignored) {
+                commandSender.sendMessage(Tools.configColor("auction.message.arg.stop.intern error").replace("{prefix}", Auction.PREFIX)
+                        .replace("{sender}", commandSender.getName()));
+                return true;
+            }
+            TimerAuction.TIMER.cancel();
+            Auction.inAuction = false;
+            Bukkit.getServer().broadcastMessage(Tools.configColor("auction.message.arg.stop.success").replace("{prefix}", Auction.PREFIX)
+                    .replace("{sender}", commandSender.getName()));
+            return true;
         }
 
 

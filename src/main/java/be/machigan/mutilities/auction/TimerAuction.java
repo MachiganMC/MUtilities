@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.*;
 
 public class TimerAuction extends TimerTask {
+    public static Timer TIMER;
 
     @Override
     public void run() {
@@ -77,8 +78,8 @@ public class TimerAuction extends TimerTask {
         Auction.bid = config.getDouble("actual.bid");
         Auction.bidder = config.getString("actual.bidder");
         Date end = Const.DATE_FORMAT.parse(config.getString("actual.end"));
-        Timer t = new Timer();
-        t.schedule(new TimerAuction(), end);
+        TIMER = new Timer();
+        TIMER.schedule(new TimerAuction(), end);
         Auction.inAuction = true;
 
     }

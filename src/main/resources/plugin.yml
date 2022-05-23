@@ -3,6 +3,11 @@ author: Machigan
 main: be.machigan.mutilities.MUtilities
 version: BETA
 api-version: 1.16
+database: false
+depend:
+  - Vault
+softdepend:
+  - PlaceholderAPI
 
 
 commands:
