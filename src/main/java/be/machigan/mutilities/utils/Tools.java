@@ -47,29 +47,28 @@ public class Tools {
     }
 
     public static String replaceColor(String text) {
-        text = text.replace("&0", "" + ChatColor.BLACK);
-        text = text.replace("&1", "" + ChatColor.DARK_BLUE);
-        text = text.replace("&2", "" + ChatColor.DARK_GREEN);
-        text = text.replace("&3", "" + ChatColor.DARK_AQUA);
-        text = text.replace("&4", "" + ChatColor.DARK_RED);
-        text = text.replace("&5", "" + ChatColor.DARK_PURPLE);
-        text = text.replace("&6", "" + ChatColor.GOLD);
-        text = text.replace("&7", "" + ChatColor.GRAY);
-        text = text.replace("&8", "" + ChatColor.DARK_GRAY);
-        text = text.replace("&9", "" + ChatColor.BLUE);
-        text = text.replace("&a", "" + ChatColor.GREEN);
-        text = text.replace("&b", "" + ChatColor.AQUA);
-        text = text.replace("&c", "" + ChatColor.RED);
-        text = text.replace("&d", "" + ChatColor.LIGHT_PURPLE);
-        text = text.replace("&e", "" + ChatColor.YELLOW);
-        text = text.replace("&f", "" + ChatColor.WHITE);
-        text = text.replace("&k", "" + ChatColor.MAGIC);
-        text = text.replace("&l", "" + ChatColor.BOLD);
-        text = text.replace("&m", "" + ChatColor.STRIKETHROUGH);
-        text = text.replace("&n", "" + ChatColor.UNDERLINE);
-        text = text.replace("&o", "" + ChatColor.ITALIC);
-        text = text.replace("&r", "" + ChatColor.RESET);
-        return text;
+        return text.replace("&0", "" + ChatColor.BLACK)
+                .replace("&1", "" + ChatColor.DARK_BLUE)
+                .replace("&2", "" + ChatColor.DARK_GREEN)
+                .replace("&3", "" + ChatColor.DARK_AQUA)
+                .replace("&4", "" + ChatColor.DARK_RED)
+                .replace("&5", "" + ChatColor.DARK_PURPLE)
+                .replace("&6", "" + ChatColor.GOLD)
+                .replace("&7", "" + ChatColor.GRAY)
+                .replace("&8", "" + ChatColor.DARK_GRAY)
+                .replace("&9", "" + ChatColor.BLUE)
+                .replace("&a", "" + ChatColor.GREEN)
+                .replace("&b", "" + ChatColor.AQUA)
+                .replace("&c", "" + ChatColor.RED)
+                .replace("&d", "" + ChatColor.LIGHT_PURPLE)
+                .replace("&e", "" + ChatColor.YELLOW)
+                .replace("&f", "" + ChatColor.WHITE)
+                .replace("&k", "" + ChatColor.MAGIC)
+                .replace("&l", "" + ChatColor.BOLD)
+                .replace("&m", "" + ChatColor.STRIKETHROUGH)
+                .replace("&n", "" + ChatColor.UNDERLINE)
+                .replace("&o", "" + ChatColor.ITALIC)
+                .replace("&r", "" + ChatColor.RESET);
     }
 
     public static void sudo(String command) {

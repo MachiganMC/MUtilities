@@ -40,7 +40,7 @@ public class Salary {
                 FileConfiguration config = YamlConfiguration.loadConfiguration(FILE);
                 for (String uuid : config.getStringList(salary)) {
                     if (Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(UUID.fromString(uuid)))) {
-                        Tools.sudo(Const.CONFIG.getString("salary.build." + salary + ".commande").replace("{prefix}", PREFIX)
+                        Tools.sudo(Const.CONFIG.getString("salary.build." + salary + ".command").replace("{prefix}", PREFIX)
                                 .replace("{player}", Bukkit.getPlayer(UUID.fromString(uuid)).getName()));
                         Bukkit.getPlayer(UUID.fromString(uuid)).sendMessage(Tools.configColor("salary.build." + salary + ".message")
                                 .replace("{prefix}", PREFIX).replace("{player}", Bukkit.getPlayer(UUID.fromString(uuid)).getName()));

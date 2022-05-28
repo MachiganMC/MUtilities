@@ -1,0 +1,681 @@
+#                               #                                                                                                         #
+#                               #                                                                                                         #
+#                               #                                                                                                         #
+#                               ###########################################################################################################
+#                               #                                                                                                         #
+#                               #   ░█████╗░░█████╗░███╗░░██╗███████╗██╗░██████╗░██╗░░░██╗██████╗░░█████╗░████████╗██╗░█████╗░███╗░░██╗   #
+#                               #   ██╔══██╗██╔══██╗████╗░██║██╔════╝██║██╔════╝░██║░░░██║██╔══██╗██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║   #
+#                               #   ██║░░╚═╝██║░░██║██╔██╗██║█████╗░░██║██║░░██╗░██║░░░██║██████╔╝███████║░░░██║░░░██║██║░░██║██╔██╗██║   #
+#                               #   ██║░░██╗██║░░██║██║╚████║██╔══╝░░██║██║░░╚██╗██║░░░██║██╔══██╗██╔══██║░░░██║░░░██║██║░░██║██║╚████║   #
+#                               #   ╚█████╔╝╚█████╔╝██║░╚███║██║░░░░░██║╚██████╔╝╚██████╔╝██║░░██║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║   #
+#                               #   ░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝   #
+#                               #                                                                                                         #
+#                               ##########################################################################################################"
+#
+#
+#
+#Bienvenue dans le fichier de configuration (français) du plugin MUtilities.
+#Voici un rapide guide pour vous apprendre à bien configurer le plugin :
+#If you are an english speaker, a config and a guide in english is available in the file "config_en.yml"
+#
+#
+#Tout d'abord, le plugin accepte les couleurs de Minecraft. Par exemple, si vous voulez mettre le texte
+#en rouge utiliser "&4" (codes des couleurs disponibles ici : https://minecraft.tools/fr/color-code.php)
+#
+#
+#Le plugin utilise des "variables internes" permettant de personnaliser vos messages. Chaque nom de variable
+#intern est entourée de "{" et de "}" (exemple : "{player}"). Leurs valeurs dépendent de la situation et ne sont pas toutes
+#utilisables partout, mais voici la signification des plus courantes :
+#  {prefix} : renvoit le prefix du module
+#  {sender} : renvoit le nom de l'exécuteur de la commande (utilisable dans les parties "messages)
+#  {perm} : renvoit la permission que le joueur ne possède pas alors qu'il a essayé d'effecuter une commande (utilisable dans les parties "no perm")
+#
+#Toutes les variables internes utilisables sont précisées à chaque champs (parfois parents, ce qui signifira que les chmpas enfants pourront y accéder)
+#Exemple :
+#
+#  create: #{prefix}
+#    only player: "{prefix} &bCette commande ne peut être effectuée que par un joueur"
+#    #{survey}
+#    already survey: "{prefix} &bIl y a déjà un sondage en cours"
+#    miss argument: "{prefix} &bVeuillez préciser votre sondage"
+#    #{survey}
+#    success: "{prefix} &bVous avez créer un sondage avec succès :\n&r{survey}"
+#    #{survey}, {creator}
+#    announcement: "{prefix} &bUn nouveau sondage vient d'être créer par &3{creator}\n&5/sondage
+#             vote [yes|no|useless]"
+#
+#Ici tous les champs enfants de "create" pourront utiliser "{prefix}". Le champ "already survey" pourra utiliser
+# {survey}, mais le champ "only player" ne pourra pas l'utiliser
+#
+#
+#Les configurations des modules "task", "salary", "notification" et "reaction" demandent (dans les champs "build") de créer vos propores champs (qui
+#ont des champs enfants prédéfinis).
+#Vous pouvez nommer ces champs comme bon vous semble (en respectant la synthaxe des fhicher .yaml, bien sûr), dans la liste des
+#tâches/salaires/notifs/reacts vous devrez réecrire exactement le nom du champ parent (enfant de "build")
+#Exemple :
+#
+#  list:
+#    - ma tache
+#
+#  build:
+#    ma tache:
+#      action: "BREAK"
+#      object: "STONE"
+#      quant: 10
+#      time: 2 #in minute
+#      command: "minecraft:give {player} stone 64"
+#      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ocasser 10 pierres"
+#
+#Ici le nom du champ (à créer) "ma tache" est réecrit dans le champ liste "list", ce champ (celui que vous avez créez) possède des champs enfants
+#prédéfinis et obligatoires : "action", "object", "quant", "time", "command" et "message".
+
+
+mutils:
+  message: #{prefix}, {sender}
+    miss argument: "{prefix} &c&oVeuillez préciser plus un argument"
+    no found: "{prefix} &c&oAucune commande n'a été trouvée"
+    arg:
+      prefix:
+        miss argument: "{prefix} &bVeuillez préciser le module dont le prefix doit changer"
+
+        #{arg}
+        no exist: "{prefix} &bLe module &3{arg} &bn'existe pas"
+        no prefix: "{prefix} &bVous n'avez pas préciser le nouveau prefix du module &6{arg}"
+        #{new prefix}
+        success: "{prefix} &bLe nouveau prefix du module &6{arg} &best maintenant &b{new prefix}"
+      reloadconfig:
+        success: "{prefix} &bLe plugin prend maintenant bien en compte la nouvelle configuration"
+      enable:
+        miss argument: "{prefix} &bVeuillez préciser le module à activer"
+        #{arg}
+        no exist: "{prefix} &c&oLe module &3{arg} &bn'existe pas"
+        success: "{prefix} &bLe module &3{arg} &best maintenant activé"
+      disable:
+        miss argument: "{prefix} &c&oVeuillez préciser le module à désactiver"
+
+        #{arg}
+        no exist: "{prefix} &bLe module &3{arg} &bn'existe pas"
+        success: "{prefix} &bLe module &3{arg} &best maintenant désactivé"
+
+    no perm: #{perm}
+      command use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+      command prefix: "{prefix} &c&oVous n'avez pas la permission de changer les prefix"
+      command reloadconfig: "{prefix} &c&oVous n'avez pas la permission de reload le fichier
+      de configuration"
+      command enable: "{prefix} &c&oVous n'avez pas la permission d'activer les modules du plugin"
+      command disable: "prefi} &c&oVous n'avez pas la permission de désactiver les modules du plugin"
+
+auction:
+  #activer (true) ou désactiver (false) le module
+  enabled: true
+  prefix: "&3[&6&lM&eAuction&3]&r"
+  #temps d'une enchère (en heure)
+  time: 24
+  #blacklist des matériaux à ne pas pouvoir mettre dans une enchère
+  #exemple : DIRT → la terre ne pourra pas être mise en enchère
+  blacklist: #material to string
+  #nom du menu du /enchere item
+  menu name: "§8➣ Enchère en cours"
+
+  message: #{prefix}, {sender}
+    #{creator}, {bidder}, {bid}, {item}, {type}, {amount}, {enchant}
+    auction: "{prefix} &bEnchère en cours :
+    \n   &7- &bCréateur : &6{creator}
+    \n   &7- &bPrix actuel : &6{bid}&b$
+    \n   &7- &bMeilleur enchérisseur : &6{bidder}
+    \n&5/enchere item &8&opour pour plus d'informations"
+    no auction: "{prefix} &bIl n'y a aucune enchère en cours"
+
+    miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
+    bad argument: "{prefix} &c&oAucune commande n'a été trouvée"
+    arg:
+      create:
+        only player: "{prefix} &bCette commande ne peut être exécutée que par un joueur"
+        already auction: "{prefix} &bIl y a déjà une enchère en cours"
+        #{item}
+        claim: "{prefix} &4Attention ! &c&oVous avez une enchère à réclamer. N'oubliez pas de la réclamer
+         avant la fin de celle-ci, sinon si personne ne propose de prix à la fin de celle-ci,
+         l'ancienne sera perdue\n&8&o/enchere claim"
+        no item: "{prefix} &bVeuillez saisir l'item à mettre aux enchères dans votre main principale"
+        #{item}
+        blacklisted: "{prefix} &ble type d'item &3{item} &bne peut pas être mis en enchère"
+        #{item}, {price}
+        invalid price: "{prefix} &bLe prix de départ donné est invalide"
+        #{item}, {price}
+        intern error: "{prefix} &4Erreur interne lors de la création de l'enchère, veuillez contacter
+         un responsable du serveur"
+        #{item}, {price}
+        success: "{prefix} &bL'enchère a été créée avec succès !"
+        #{item}, {price}, {creator}
+        announce: "{prefix} &bUne nouvelle enchère vient d'être créée\n&5/enchere"
+      info:
+        only player: "{prefix} &bCette commande ne peut être exécutée que par un joueur"
+        no auction: "{prefix} &bIl n'y a pas d'enchère en cours"
+      overbid:
+        only player: "{prefix} &bCette commande ne peut être effectuée que par un joueur"
+        creator: "{prefix} &bVous ne pouvez pas proposer un prix à votre propre enchère"
+        #{item}
+        claim: "{prefix} &4Attention ! &c&oVous avez une enchère à réclamer. N'oubliez pas de la réclamer
+         avant la fin de celle-ci, sinon si vous être le meilleur enchérisseur à la fin de celle-ci,
+          l'ancienne sera perdue\n&8&o/enchere claim"
+        already bidder: "{prefix} &bVous êtes déjà l'enchérisseur de l'enchère"
+        no bid: "{prefix} &bveuillez préciser un prix pour l'enchère"
+        #{price}
+        invalid price: "{prefix} &bLe prix &3{price} &best invalide"
+        #{price}
+        not enough money: "{prefix} &bVous n'avez pas assez d'argent"
+        #{price}, {bid}
+        bigger price: "{prefix} &bLe prix &3{price}&b$ est trop bas &7&o(min. &6&o{bid}&7&o$)"
+        #{price}, {bid}
+        intern error: "{prefix} &4Erreur interne lors du prélèvement de la somme de &c{price}&4,
+         veuillez contacter un responsable du serveur"
+        #{price}
+        success: "{prefix} &3{sender} &bvient d'enchèrir &3{price}&b$ !"
+      end: #{creator}, {item}
+        no bidder: "{prefix} &bL'enchère a pris fin sans que personne n'ait proposé de prix..."
+        #{bidder}, {bid}
+        with bidder: "{prefix} &3{bidder} &ba remporté l'enchère !"
+      claim:
+        only player: "{prefix} &bCette commande ne peut être exécutée que par un joueur"
+        no claim: "{prefix} &bVous n'avez aucune enchère à réclamer"
+        #{item}
+        intern error: "{prefix} &4Erreur interne lors de votre réclamation, contactez un responsable du
+         du serveur"
+        #{item}
+        success: "{prefix} &aRéclamation effectuée !"
+        #{item}
+        on connect: "{prefix} &bVous avez une réclamation d'enchère\n&8&o/enchere claim"
+      stop:
+        no auction: "{prefix}&c&oIl n'y a aucune enchère en cours"
+        #{bidder}, {bid}
+        payment error: "{prefix} &bErreur interne lors du remboursement de &3{bid}&b$ à &3{bidder}"
+        intern error: "{prefix} &berreur interne lors de la réinitialisation de l'enchère"
+        success: "{prefix} &bL'enchère en cours a été arrêtée prématurément"
+
+    no perm: #{perm}
+      auction use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+      auction create: "{prefix} &c&oVous n'avez pas la permission de crééer une enchère"
+      auction item: "{prefix} &c&oVous n'avez pas la permission de voir l'item de l'enchère"
+      auction overbid: "{prefix} &c&oVous n'avez pas la permission de proposer un prix"
+      auction stop: "{prefix} &c&oVous n'avez pas la permission d'arrêter une enchère"
+
+prout:
+  #activer (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eProut&3]&r"
+  #nombre de joueurs minimum pour que la commande puisse être exécutée
+  #garder en tête que les prouts utilisant le {random player}, un minimum de 2 est conseillé
+  min player: 2
+
+  #cooldown (en minutes) entre plusieurs prout (pour éviter le spam de la commande)
+  cooldown: 10 #in minute
+
+  #liste des prouts à prendre aléatoirement lors de l'exécution de la commande
+  list: #{prefix}, {random player}
+    - "Comment on claim ?????"
+    - ":WARP RESSOURCES"
+    - "1547.25"
+    - "#run"
+    - "{random player} ? Tu peux m'aider ?"
+    - "Perso je trouve que {random player} devrait être ban"
+    - "Mutilities c'est quand même un bon plugin, non ?"
+
+  message:
+    #{min}
+    not enough player: "{prefix} &bIl n'y a pas assez de joueur pour prouter &7&o(min. &6&o{min}&7&o)"
+    wait: "{prefix} &c&oVeuillez attendre avant de prouter"
+    no perm:
+      prout use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+
+task:
+  #acitver (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eTask&3]&r"
+  #délais (en minute) entre plusieurs tâche (une seule tache ne peut être exécutée à la fois)
+  delay: 60
+
+  end message: "{prefix} &3Fin de la tâche !"
+  #{player}, {time}
+  winners: "{prefix} &6{player} &ba réalisé la tâche en &6{time} &3secondes"
+
+  #iste de toutes les tâches (récrire leur nom)
+  list:
+    - task 1
+    - task 2
+    - task 3
+    - task 4
+    - task 6
+    - task 7
+  # - ma tache
+
+  #c'est ici que vous construisez votre tâche, si une tâche un bloc/item/entité ou l'action est introuvable, la tâche est ignorée
+  #exemple de build d'une tâche :
+
+  #ma tache:                                    [nom de la tâche, à réecrire dans la liste des tâches "list" pour l'enregistrer]
+  # action: "BREAK"                             [action à réaliser, à choisir parmi "BREAK" (casser), "KILL" (tuer), "CRAFT" (fabriquer) et "EAT" (manger)]
+  # object: "STONE"                             [bloc/item/entités qui étant la cible de la tâche, pour les actions "BREAK", "CRAFT" et "EAT" il faut mettre un material et pour "KILL" une entité]
+  # time: 3                                     [le temps (en minute) avant que la tâche ne prenne fin
+  # quant: 128                                  [le nombre d'objet que le joueur doit casser/manger/fabriquer/tuer pour réussir la tâche]
+  # command: give {player} minecraft:diamond    [la commande a exécutée pour chaque joueur, remplacer le pseudo du joueur par {player}. Ne pas ajouter le "/" au début de la commande !]
+  # message: "{prefix} &bCasser &63 pierres     [message a envoyé dans le tchat pour annoncer la tâche]
+  #&bpour gagner une récompense
+
+  build:
+    task 1:
+      action: "BREAK"
+      object : "STONE"
+      quant: 10
+      time: 2 #in minute
+      command: "minecraft:give {player} stone 64"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ocasser 10 pierres"
+    task 2:
+      action: "CRAFT"
+      object: "STONE_PICKAXE"
+      quant: 5
+      time: 3
+      command: "minecraft:give {player} iron_ingot 10"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ofabriquer 5 pioches en
+       pierre"
+    task 3:
+      action: "KILL"
+      object: "ZOMBIE"
+      quant: 5
+      time: 10
+      command: "minecraft:give {player} diamond 5"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&otuer 10 zombies"
+    task 4:
+      action: "EAT"
+      object: "COOKED_BEEF"
+      quant: 5
+      time: 3
+      command: "minecraft:give {player} diamond 2"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&omanger 5 boeufs cuits"
+    task 5:
+      action: "BREAK"
+      object: "BAMBOO"
+      quant: 10
+      time: 5
+      command: "minecraft:give {player} bamboo 64"
+      message: "{prefix} &bRéaliser cette tâche pour gagner une récompense : &e&ocasser 10 bamboos"
+    task 6:
+      action: "CRAFT"
+      object: "ORANGE_CARPET"
+      quant: 20
+      time: 10
+      command: "minecraft:give {player} orange_wool 40"
+      message: "{prefix} &bRéaliser cette tâches pour gagner une récompnse : &e&ofabriquer 20 tapis oranges"
+
+  message: #{prefix}, {sender}
+    miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
+    not found: "{prefix} &c&oAucune commande n'a été trouvée"
+    arg:
+      me:
+        only player: "{prefix} &bCette commande ne peut être exécutée que par un joueur"
+        not participate: "{prefix} &bVous n'avez pas encore gagné de tâches"
+        #{total win}, {avg time}
+        success: "{prefix} &bVos statistiques du jeu des tâches :
+        \n   &7- &6Tâches gagnées : &b{total win}
+        \n   &7- &6Temps moyen : &b{avg time} &3secondes"
+      info:
+        miss argument: "{prefix} &bVeuillez préciser le pseudo du joueur"
+        #{arg}
+        not found: "{prefix} &bLe joueur &3{arg} &bn'a pas été trouvé"
+        #{player}
+        not participate: "{prefix} &bLe joueur &3{player} &bn'a pas encore gagné de jeu de tâche"
+        #{player}, {total win}, {avg time}
+        success: "{prefix} &bStatistiques de &3{player} &b :
+        \n   &7- &6Tâches gagnées : &b{total win}
+        \n   &7- &6Temps moyen : &b{avg time} &3secondes"
+      start:
+        already task: "{prefix} &bIl y a déjà un jeu de tâche en cours"
+        success: "{prefix} &bUn nouveau de tâche a été lancé avec succès !"
+    no perm: #{perm}
+      task use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+      task me: "{prefix} &c&oVous n'avez pas la permission de voir vos stats"
+      task info: "{prefix} &c&oVous n'avez pas la permission de voir les sats des autres joueurs"
+      task start: "{prefix} &c&oVous n'avez pas la permission de démarrer une nouvelle tâche"
+
+colorname:
+  #aciver (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eColor.&3]&r"
+
+  #utiliser directement le plugin pour générer le displayname et le playerlistname (true) ou pas (false)
+  #il est conseillé de laisser en false si vous avez un plugin qui gère déjà ces parties. Á la place,
+  #utiliser les PlaceHolder des colorname -> %mutils_colorname% renverra le colorname du joueur
+  use: false
+
+  message:
+    bad argument: "{prefix} &c&oAucune commande n'a été trouvée"
+    miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
+    arg:
+      me:
+        only player: "{prefix} &bCette commande ne peut être exécutée que par un joueur"
+        miss argument: "{prefix} &c&oVeuillez préciser ce que vous voulez faire avec la couleur de votre
+         pseudo"
+        reset: #{display name}
+          success: "{prefix} &bVotre pseudo est désormais remis à la normale &5[&6{display name}&r&5]"
+        set:
+          miss argument: "{prefix} &c&oVeuillez préciser comment définir votre couleur de pseudo"
+          #{code}
+          bad code: "{prefix} &bLe code couleur contient un caractère invalide &7&o(&6&o{code}&7&o)"
+          #{display name}, {code}
+          success: "{prefix} &bVotre nouvelle couleur de pseudo est maintenant : &5[{display name}&r&5]"
+      other: #{player}
+        player not found: "{prefix} &bLe joueur &3{player} &bn'existe pas"
+        miss argument: "{prefix} &bVeuillez préciser ce que vous voulez faire avec la couleur du pseudo de
+         {player}"
+        reset: #{display name}
+          success: "{prefix} &bLe pseudo de &3{player} &best remis à la normale &5[&6{display name}&r&5]"
+        set:
+          miss argument: "{prefix} &bVeuillez préciser le code couleur du pseudo de &3{player}"
+          #{code}
+          bad code: "{prefix} &bLe code couleur contient un caractère invalide &7&o(&6&o{code}&7&o)"
+          #{display name}, {code}
+          success: "{prefix} &bLe pseudo de &3{player} &best maintenant &5[&r{display name}&r&5]"
+    no perm: #{perm}
+      colorname use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+      colorname me: "{prefix &c&oVous n'avez pas la permission de changer la couleur de votre pseudo"
+
+survey:
+  #activer (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eSurvey&3]&r"
+  #durée d'un sondage (en heures)
+  time: 24
+
+  #délais entre 2 messages d'annonce de sondage (en minutes)
+  delay: 20
+
+  #nombre de vote inutile (/sondage vote useless) pour qu'un sondage soit arrêté
+  useless to stop: 5
+
+  message: #{prefix}
+    #{survey}, {yes}, {no}, {useless}, {total vote}, {creator}, {receiver}
+    survey: "{prefix} &bSondage en cours :\n&r{survey}\n &2POUR : {yes}   &4CONTRE : {no}   &7INUTILE :
+     {useless}\n&5NOMBRE DE VOTES : {total vote}"
+    #{survey}, {yes}, {no}, {useless}, {total vote}, {creator}
+    end: "{prefix} &bLe sondage vient de se terminer :\n&r{survey}\n&6&nRÉSULTATS :&r\n   &2POUR : {yes}
+    \n   &4CONTRE : {no}\n   &7INUTILE : {useless}\n&6&nTOTAL DE VOTES : {total vote}"
+    #{receiver}
+    no survey: "{prefix} &bIl n'y a pas de sondage en cours\n&8&o/sondage create [<sondage>]&b, pour en
+     créer un"
+    stop: "{prefix} &bLe sondage en cours a été arrêté prématurément"
+    #{sender}
+    bad argument : "{prefix} &c&oAucune commande n'a été trouvée"
+
+    arg:
+      create:
+        only player: "{prefix} &bCette commande ne peut être effectuée que par un joueur"
+        #{survey}
+        already survey: "{prefix} &bIl y a déjà un sondage en cours"
+        miss argument: "{prefix} &bVeuillez préciser votre sondage"
+        #{survey}
+        success: "{prefix} &bVous avez créer un sondage avec succès :\n&r{survey}"
+        #{survey}, {creator}
+        announcement: "{prefix} &bUn nouveau sondage vient d'être créer par &3{creator}\n&5/sondage
+         vote [yes|no|useless]"
+        intern error: "{prefix} &4Erreur interne lors de la création du sondage, contacter un responsable
+         du serveur"
+      vote:
+        only player: "{prefix} &bCette commande ne peut être exécutée que par un joueur"
+        already vote: "{prefix} &c&oVous avez déjà voté pour ce sondage"
+        miss argument: "{prefix} &c&oVeuillez préciser votre vote"
+        #{arg}
+        bad argument: "{prefix} &bVote introuvable &8&o(&2yes&8&o, &4no&8&o, &7useless&8&o)"
+        vote yes: "{prefix} &3{sender} &ba voté &2OUI &bpour le sondage en cours !"
+        vote no: "{prefix} &3{sender} &ba voté &4NON &bpour le sondage en cours !"
+        useless: "{prefix} &3{sender} &ba voté &7INUTILE &bpour le sondage en cours !"
+        intern error: "{prefix} &4Erreur interne lors du vote, veuillez contacter un responsable
+         du serveur"
+      stop:
+        no survey: "{prefix} &bIl n'y a pas de sondage en cours"
+        intern error: "{prefix} &4Erreur interne lors de l'arrêt du sondage, veuillez contacter un
+         responsable du serveur"
+        #{survey}
+        success: "{prefix} &bVous avez arrêté le sondage :\n&5[&r{survey}&5] &bavec succès"
+      history: #{max}
+        no survey: "{prefix} &bIl n'y pas eu de sondage"
+        miss argument: "{prefix} &bVeuilez préciser l'id du sondage à voir &7&o(&6&omax. {max}&7&o)"
+        #{arg}
+        nan: "{prefix} &bVeuillez écrire un nombre"
+        #{id}
+        bad id: "{prefix} &bAucun sondage trouvé avec l'id &3{id}"
+        #{id}, {survey}, {yes}, {no}, {useless}, {total vote}, {creator}, {flag}
+        success: "{prefix} &6&nInformations sondages N°{id} :
+        \n&r&6&m--------------------&r\n{survey}&r
+        \n&6&m--------------------
+        \n&r&6&nRésultats :&r\n   &2POUR : {yes}\n   &4CONTRE : {no}\n   &7INUTILE : {useless}
+        \n&6&nTOTAL DE VOTES : {total vote}\n&r&5Émetteur du sondage : &6{creator}"
+
+
+    no perm: #{perm}
+      survey use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+      survey create: "{prefix} &c&oVous n'avez pas la permission de créer des sondages"
+      survey vote: "{prefix} &c&oVous n'avez pas la permission de voter pour un sondage"
+      survey stop: "{prefix} &c&oVous n'avez pas la permission de d'arrêter un sondage"
+      survey history: "{prefix} &c&oVous n'avez pas la permission de voir l'historique des sondages"
+
+salary:
+  #activer (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eSalary&3]&r"
+
+  #liste des salaires enregistrés
+  all salaries:
+    - basic
+    - advance
+  # - mon salaire
+
+  #c'est ici que vous créez vos salaires
+  #exemple de build:
+
+  #mon salaire:                                                     [nom du salaire à réutiliser dans "all salaries" pour l'enregistrer]
+  # message: {prefix} &bVous recevez votre salaire de 3 diamants    [message à envoyer au joueur pour annoncer son salaire]
+  # commande: minecraft:give {player} diamond 3                     [commande de salaire]
+  # delay: 60                                                       [délais (en minute) entre 2 mêmes salaires]
+  build: #{prefix}, {player}
+    basic:
+      message: "{prefix} &bDistribution des paies, vous recevez &e5 diamants&b."
+      command: "minecraft:give {player} diamond 5"
+      delay: 20 #{minute}
+    advance:
+      message: "{prefix} &bDistribution des paies, vous recevez &e1 bloc de diamant&b."
+      command: "minecraft:give {player} diamond_block"
+      delay: 60
+
+
+  message: #{prefix}, {sender}
+    miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
+    #{arg}
+    no exist: "{prefix} &bLe salaire &3{arg} &bn'existe pas"
+    no action: "{prefix} &c&oVeuillez préciser si vous voulez ajouter ou retirer un joueur d'un salaire"
+    #{arg2}
+    bad argument: "{prefix} &c&oArgument introuvable, voulez vous ajouter (add) ou retirer (remove) ?"
+    arg:
+      add: #{player}
+        no player: "{prefix} &c&oVeuillez préciser le pseudo du joueur à ajouter"
+        player not found: "{prefix} &c&oLe joueur &4{player} &c&on'existe pas"
+        already in: "{prefix} &bLe joueur &3{player} &ba déjà ce salaire"
+        intern error: "{prefix} &4Erreur interne, le joueur n'a pas pu être sauvegardé"
+        success: "{prefix} &bLe joueur &3{player} &brecevra désormais le salaire {arg}"
+      remove:
+        no player: "{prefix} &c&oVeuillez préciser le pseudo du joueur à retirer"
+        player not found: "{prefix} &c&oLe joueur &4{player} &c&on'existe pas"
+        already out: "{prefix} &bLe joueur &3{player} &bn'est pas dans le salaire"
+        intern error: "{prefix} &4Erreur interne, le joueur n'a pas pu être retiré"
+        success: "{prefix} &bLe joueur &3{player} &ba été retiré avec succès du salaire {arg}"
+    no perm:
+      salary use: "{prefix} &c&oVous n'avez pas la permission d'utiliser cette commande"
+      salary add: "{prefix} &c&oVous n'avez pas la permission d'ajouter des joueurs à un salaire"
+      salary remove: "{prefix} &c&oVous n'avez pas la permission de retirer un joueur d'un salaire"
+
+notification:
+  #activer (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eNotif.&3]&r"
+  #délais (en minute) entre 2 messages de notification
+  delay: 20 # in minute
+
+  #liste de tous les messages de notifications enregistrés
+  all notif:
+    - info
+    - vote
+    - info 2
+    - message
+    - vote 2
+    - info 3
+  # - ma notif
+
+  #c'est ici que vous construisez vos messages de notifications
+  #exemple de build:
+
+  #ma notif:
+  # message: "{prefix} Hey, fais /site pour avoir le site du serveur" [message de la notification à envoyer dans le tchat]
+  # hover: "Ou alors clique ici" [message qui apparaîtra quand le joueur passera sa souris sur le message dans le tchat, ce paramètre n'est pas obligatoire]
+  # click "htts://minecraft.monsite.com" [lien, en cas de clique sur le message, qui s'ouvrira, ce paramètre n'est pas obligatoire]
+
+
+  build: #{prefix}, {player} (the player who will receive the notif)
+    info:
+      message: "{prefix} &6&lM&eUtilities &best un plugin de modules"
+    vote:
+      message: "{prefix} &bHey {player} hésite pas à voter"
+      hover: "{prefix} &bClique pour voter"
+      click: "https://google.com"
+    info 2:
+      message: "{prefix} &6&lM&eUtilities &best un plugin développé par &e&oMachigan"
+      click: "https://www.spigotmc.org/members/machigan.1488468/"
+    message:
+      message: "{prefix} &bPasse ta souris sur ce messsage..."
+      hover: "&6BOUH!"
+    vote 2:
+      message: "{prefix} &bTu peux aussi voter sur ce site (&7&oplus trop utilisé...&b)"
+      hover: "{prefix} &bClique pour voter"
+      click: "https://yahoo.com"
+    info 3:
+      message: "{prefix} &bFais &6/op &bpour ne pas être op"
+      hover: "{prefix} &bÉvidemment, tu n'as pas la permission"
+
+reaction:
+  #acitver (true) ou désactiver (false) le module
+  enabled: true
+
+  prefix: "&3[&6&lM&eReact.&3]&r"
+
+  #temps (en seconde) avant la fin d'un jeu de réaction
+  time: 30
+
+  #délais (en minute) entre 2 jeux de réaction
+  delay: 20
+
+  end message: "{prefix} &bFin du jeu de réaction"
+
+  #commandes a exécutée pour le premier, deuxième et troisième joueur (remplacer le pseudo du joueur par {player}
+  command first: "eco give {player} 100"
+  command second: "eco give {player} 75"
+  command third: "eco give {player} 50"
+
+  #liste des jeux de réaction enregistrés
+  list:
+    - equation 1
+    - equation 2
+    - rewrite
+    - phrase
+    - phrase 2
+    - rewrite 2
+  # - ma react
+
+  #c'est ici que vous créez vos jeux de réaction
+  #exemple de build:
+
+  #ma react:                                                    [nom du jeu de réaction, à réutiliser dans "list"]
+  # message: "{prefix} réecris ce mot : &emot"                  [message qui s'affichera dans le tchat pour annoncer le jeu]
+  # win: "&3{player} &ba réecrit le mot en {time} secondes"     [message pour annoncer un gagnant]
+  # nowin: "{prefix} &c&oPersonne n'a réecrit le mot...         [message s'il n'y aucun gagnant]
+  # word: "mot"                                                 [mot à réecrire pour gagner le réaction]
+
+
+  build: #{prefix}
+    equation 1:
+      message: "{prefix} &bRésolvez cette équation le plus vite possible : &e&o35 * 5"
+      word: "175"
+      win: "{prefix} &6{player} &ba résolu l'équation en &e{time} &bsecondes"
+      nowin: "{prefix} &c&oPersonne n'a su trouver le résultat de l'équation..."
+    equation 2:
+      message: "{prefix} &bRésolvez cette équation le plus vite possible : §e&o24 / 6"
+      word: "4"
+      win: "{prefix} &6{player} &ba résolu l'équation en &e{time} &bsecondes"
+      nowin: "{prefix} &c&oPersonne n'a su trouver le résultat de l'équation..."
+    rewrite:
+      message: "{prefix} &bRéecrivez le mot suivant le plus vite possible : §e§oconfiguration"
+      word: "configuration"
+      win: "{prefix} &6{player} &ba écrit le mot en &e{time} &bsecondes"
+      nowin: "{prefix} &c&oPersonne n'a écrit le mot assez rapidement..."
+    phrase:
+      message: "{prefix} &bRéecrivez la phrase suivante : &e&oJ'aime écrire"
+      word: "J'aime écrire"
+      win: "{prefix} &6{player} &ba écrit la phrase en &e{time} &bsecondes"
+      nowin: "{prefix} &c&oPersonne n'a écrit la phrase assez rapidement..."
+    phrase 2:
+      message: "{prefix} &bRéecrivez la phrase suivante : &e&oJe déteste écrire..."
+      word: "Je déteste écrire..."
+      win: "{prefix} &6{player} &ba écrit la phrase en &e{time} &bsecondes"
+      nowin: "{prefix} &c&oPersonne n'a écrit la phrase assez rapidement..."
+    rewrite 2:
+      message: "{prefix} &bRéecrivez le mot suivant : &e&ochoux-fleur"
+      word: "choux-fleur"
+      win: "{prefix} &6{player} &ba écrit la phrase en &e{time} &bsecondes"
+      nowin: "{prefix} &c&oPersonne n'a écrit le mot assez rapidement..."
+
+
+  message: #{prefix}, {sender}
+    miss argument: "{prefix} &c&oVeuillez préciser plus d'argument"
+    no command found: "{prefix} &c&oAucune commande n'a été trouvée"
+
+    arg:
+      top: #{maxpage}, {putpage}
+        empty list: "{prefix} &bAucun joueur n'a encore été enregistré"
+        not valid page: "{prefix} &bLa page introduite n'est pas valide"
+        max page: "{prefix} &bLa page introduite dépasse le nombre max de page &6&o(max. {maxpage})"
+        success: "{prefix} &bMeilleurs joueurs &6&o({putpage}/{maxpage}) &b:"
+
+        #{player}, {avg time}, {pos1}, {pos2}, {pos3}, {total part}, {pos}
+        line: "   &7{pos}) &6{player} &8- &a{pos1} &bvictoires"
+      start:
+        success: "{prefix} &bLa réaction a été lancée avec succès !"
+        already react: "{prefix} &c&oIl y a déjà un jeu en cours. Patientez !"
+      me:
+        only player: "{prefix} &cCette commande ne peut être utilisée que par un joueur"
+        not found: "{prefix} &cVous n'avez pas encore participé à un jeu de réaction"
+        success: #{avg time}, {pos1}, {pos2}, {pos3}, {total part}
+          - "{prefix} &bVos statistiques de réactions : "
+          - "   &7- &bTemps moyen : &6{avg time} &3secondes"
+          - "   &7- &6{pos1} fois &bpremier"
+          - "   &7- &6{pos2} fois &bdeuxième"
+          - "   &7- &6{pos3} fois &btroisième"
+          - "   &7- &bTotal participations : &6{total part}"
+      info:
+        miss arg: "{prefix} &c&oVeuillez préciser le pseudo du joueur"
+        not found: "{prefix} &bLe joueur &e&o{player} &best introuvable"
+        success: #{player}, {avg time}, {pos1}, {pos2}, {pos3}, {total part}
+          - "{prefix} &bStatistiques de &6{player} &b: "
+          - "   &7- &bTemps moyen : &6{avg time} &3secondes"
+          - "   &7- &6{pos1} fois &bpremier"
+          - "   &7- &6{pos2} fois &bdeuxième"
+          - "   &7- &6{pos3} fois &btroisième"
+          - "   &7- &bTotal participations : &6{total part}"
+
+    no perm: #{perm}
+      reaction use: "{prefix} &4Vous n'avez pas la permission d'utiliser cette commande"
+      reaction see top: "{prefix} &4Vous n'avez pas la permission de voir le top des gagnants"
+      reaction start: "{prefix} &4Vous n'avez pas la permission de lancer une réaction"
+      reaction see me: "{prefix} &4Vous n'avez pas la permission de voir vos statistiques"
+
+

@@ -1,0 +1,506 @@
+#                               #                                                                                                         #
+#                               #                                                                                                         #
+#                               #                                                                                                         #
+#                               ###########################################################################################################
+#                               #                                                                                                         #
+#                               #   ░█████╗░░█████╗░███╗░░██╗███████╗██╗░██████╗░██╗░░░██╗██████╗░░█████╗░████████╗██╗░█████╗░███╗░░██╗   #
+#                               #   ██╔══██╗██╔══██╗████╗░██║██╔════╝██║██╔════╝░██║░░░██║██╔══██╗██╔══██╗╚══██╔══╝██║██╔══██╗████╗░██║   #
+#                               #   ██║░░╚═╝██║░░██║██╔██╗██║█████╗░░██║██║░░██╗░██║░░░██║██████╔╝███████║░░░██║░░░██║██║░░██║██╔██╗██║   #
+#                               #   ██║░░██╗██║░░██║██║╚████║██╔══╝░░██║██║░░╚██╗██║░░░██║██╔══██╗██╔══██║░░░██║░░░██║██║░░██║██║╚████║   #
+#                               #   ╚█████╔╝╚█████╔╝██║░╚███║██║░░░░░██║╚██████╔╝╚██████╔╝██║░░██║██║░░██║░░░██║░░░██║╚█████╔╝██║░╚███║   #
+#                               #   ░╚════╝░░╚════╝░╚═╝░░╚══╝╚═╝░░░░░╚═╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝░╚════╝░╚═╝░░╚══╝   #
+#                               #                                                                                                         #
+#                               ##########################################################################################################"
+#
+#
+#
+#Welcome to the file configuration (empty) of the plugin MUtilities.
+#Here is a guide to teach you how to configure the plugin :
+#Si vous êtes francophone, une configuration et un guide en français sont disponibles dans le fichier "config_fr.yml"
+#And if you are an english speaker, a configuration file is already written in english in the file "config_en.yml"
+#
+#
+#First, the plugin allow you to use the Minecraft color code. For example, if you want to put the test
+#in red, you have to use "&4" before the text (all allowed color code are here : https://minecraft.tools/fr/color-code.php)
+#
+#
+#The plugin use "intern variable" allowing you to personnalise your messages. Each variable name is between "{" and "}"
+#(e.g.: "{player}"). Hers values depend on the situation and all can't use everywhere, but here is the mainly used :
+#  {prefix} : return the prefix of the module
+#  {sender} : return the sender name of the command
+#  {perm} : return the name of the permission that the player doesn't have to use a command
+#
+#Every intern variable allowed to be written is specified at each field (sometimes parent, so the children field of this field can use it)
+#Example :
+#
+#  create:
+#    only player: "{prefix} &bThis command can only be executed by a player"
+#    #{survey}
+#    already survey: "{prefix} &bThere is already a survey"
+#    miss argument: "{prefix} &bPlease, specify the survey"
+#    #{survey}
+#    success: "{prefix} &bA survey was created :\n&r{survey}"
+#    #{survey}, {creator}
+#    announcement: "{prefix} &bA new survey is just created by &3{creator}\n&5/survey
+#           vote [yes|no|useless]"
+#
+#Here, every child field of "create" field can use "{prefix}". The field "already survey" can use {survey}, but not the field
+#"only player".
+#
+#
+#The configuration of the modules "task", "salary," "notification" and "reaction" ask you (in the "build" field) to create your own
+#field (who have children field predefined).
+#You can name it like you want (in respect with .yaml file syntax, of course), in the list of tasks/salaries/notifs/reacts you will have to
+#rewrite exactly the name of the parent field (children of "build" field).
+#Example :
+#
+#  list:
+#    - my task
+#  build:
+#    my task:
+#      action: "BREAK"
+#      object : "STONE"
+#      quant: 10
+#      time: 2 #in minute
+#      command: "minecraft:give {player} stone 64"
+#      message: "{prefix} &bAchieve this task for a reward : &e&obreak 10 cobblestone"
+#
+#Here the name of the field (that you have to create) "my task" is rewritten in the list field "list", this field (the field that you have created)
+#has children field predefined and obligatory : "action", "object", "quant", "time", "command" and "message".
+
+
+mutils:
+  message: #{prefix}, {sender}
+    miss argument:
+    no found:
+    arg:
+      prefix:
+        miss argument:
+
+        #{arg}
+        no exist:
+        no prefix:
+        #{new prefix}
+        success:
+      reloadconfig:
+        success:
+      enable:
+        miss argument:
+        #{arg}
+        no exist:
+        success:
+      disable:
+        miss argument:
+
+        #{arg}
+        no exist:
+        success:
+
+    no perm: #{perm}
+      command use:
+      command prefix:
+      command reloadconfig:
+      command enable:
+      command disable:
+
+auction:
+  #enable (true) or disable (false) the module
+  enabled:
+
+  prefix:
+  #duration (in hour) of an auction
+  time:
+
+  #list of a type of item that cannot be in an auction
+  #example: "DIRT" -> the dirt could not be in an auction
+  blacklist:
+
+  #name of the menu of the command /auction item
+  menu name:
+
+  message: #{prefix}, {sender}
+    #{creator}, {bidder}, {bid}, {item}, {type}, {amount}, {enchant}
+    auction:
+    no auction:
+
+    miss argument:
+    bad argument:
+    arg:
+      create:
+        only player:
+        already auction:
+        #{item}
+        claim:
+        no item:
+        #{item}
+        blacklisted:
+        #{item}, {price}
+        invalid price:
+        #{item}, {price}
+        intern error:
+        #{item}, {price}
+        success:
+        #{item}, {price}, {creator}
+        announce:
+      info:
+        only player:
+        no auction:
+      overbid:
+        only player:
+        creator:
+        #{item}
+        claim:
+        already bidder:
+        no bid:
+        #{price}
+        invalid price:
+        #{price}
+        not enough money:
+        #{price}, {bid}
+        bigger price:
+        #{price}, {bid}
+        intern error:
+        #{price}
+        success:
+      end: #{creator}, {item}
+        no bidder:
+        #{bidder}, {bid}
+        with bidder:
+      claim:
+        only player:
+        no claim:
+        #{item}
+        intern error:
+        #{item}
+        success:
+        #{item}
+        on connect:
+      stop:
+        no auction:
+        #{bidder}, {bid}
+        payment error:
+        intern error:
+        success:
+
+    no perm: #{perm}
+      auction use:
+      auction create:
+      auction item:
+      auction overbid:
+      auction stop:
+
+prout:
+  #enabke (true) or disable (false) the module
+  enabled:
+
+  prefix:
+
+  #minimum players required to be connected to can execute the command
+  min player:
+
+  #cooldown between (in minute) for a player to do 2 prout
+  cooldown:
+
+  #list of all prout
+  list: #{prefix}, {random player}
+
+
+  message:
+    #{min}
+    not enough player:
+    wait:
+    no perm:
+      prout use:
+
+task:
+  #enable (true) or disable (false) the module
+  enabled:
+
+  prefix:
+
+  #duration (in minute) between 2 tasks
+  delay:
+
+  end message:
+  #{player}, {time}
+  winners:
+
+  #list of all your registered tasks
+  list:
+  # - my task
+
+  #this is here where you build your tasks
+  #example of a build:
+  build:
+  #my task:
+  # action: "BREAK"                                  [action to be executed to win the task among "BREAK", "EAT", "CRAFT" AND "KILL"]
+  # object: "DIRT"                                   [block/item/entity of the task, if the action is "BREAK", "EAT" OR  "CRAFT" the object has to be a material and for "KILL" an entity]
+  # quant: 64                                        [the quantity of the object to win the task]
+  # time: 3                                          [time (in minute) that the players have to do the task]
+  # command: "minecraft:give {player} diamond 3"     [command to be executed for each player who do the task, replace the player name by {player}
+  # message: "{prefix} &bBreak 64 dirt"              [announcement to prevent the player that a task in started]
+
+
+  message: #{prefix}, {sender}
+    miss argument:
+    not found:
+    arg:
+      me:
+        only player:
+        not participate:
+        #{total win}, {avg time}
+        success:
+      info:
+        miss argument:
+        #{arg}
+        not found:
+        #{player}
+        not participate:
+        #{player}, {total win}, {avg time}
+        success:
+      start:
+        already task:
+        success:
+    no perm: #{perm}
+      task use:
+      task me:
+      task info:
+      task start:
+
+colorname:
+  #enable (true) or disable (false) the module
+  enabled:
+
+  prefix:
+
+  #if set to true, the plugin will generate the displayname and the playerlistname
+  #if you use an extern plugin who handle the displayname or playerlistname, set to false and use
+  #the PlaceHolders of the colornames -> %mutils_colorname% who return the colorname of a player
+  use:
+
+  message:
+    bad argument:
+    miss argument:
+    arg:
+      me:
+        only player:
+        miss argument:
+        reset: #{display name}
+          success:
+        set:
+          miss argument:
+          #{code}
+          bad code:
+          #{display name}, {code}
+          success:
+      other: #{player}
+        player not found:
+        miss argument:
+        reset: #{display name}
+          success:
+        set:
+          miss argument:
+          #{code}
+          bad code:
+          #{display name}, {code}
+          success:
+    no perm: #{perm}
+      colorname use:
+      colorname me:
+
+survey:
+  #enable (true) or disable (false) the module
+  enabled:
+
+  prefix:
+  #duration (in hour) of a survey
+  time:
+
+  #delay (in minute) between 2 message of a survey
+  delay:
+
+  #number of useless vote (/survey vote useless) to stop a survey
+  useless to stop:
+  message: #{prefix}
+    #{survey}, {yes}, {no}, {useless}, {total vote}, {creator}, {receiver}
+    survey:
+    #{survey}, {yes}, {no}, {useless}, {total vote}, {creator}
+    end:
+    #{receiver}
+    no survey:
+    stop:
+    #{sender}
+    bad argument :
+
+    arg:
+      create:
+        only player:
+        #{survey}
+        already survey:
+        miss argument:
+        #{survey}
+        success:
+        #{survey}, {creator}
+        announcement:
+        intern error:
+      vote:
+        only player:
+        already vote:
+        miss argument:
+        #{arg}
+        bad argument:
+        vote yes:
+        vote no:
+        useless:
+        intern error:
+      stop:
+        no survey:
+        intern error:
+        #{survey}
+        success:
+      history: #{max}
+        no survey:
+        miss argument:
+        #{arg}
+        nan:
+        #{id}
+        bad id:
+        #{id}, {survey}, {yes}, {no}, {useless}, {total vote}, {creator}, {flag}
+        success:
+
+    no perm: #{perm}
+      survey use:
+      survey create:
+      survey vote:
+      survey stop:
+      survey history:
+
+salary:
+  #enable (true) or disable (false) the module
+  enabled:
+
+  prefix:
+
+  #all your recorded salaries
+  all salaries:
+  # - my salary
+
+  #this is here where you build your salaries
+  #example of a build:
+  build: #{prefix}, {player}
+  #my salary:
+  # message: "{prefix} &bHere your salary" [message to send to the player who receive the salary]
+  # command: "minecraft:give {player} diamond 3" [salary command, replace player name by {player}]
+  # delay: 60 [time (in minute) between 2 same salaries]
+
+  message: #{prefix}, {sender}
+    miss argument:
+    #{arg}
+    no exist:
+    no action:
+    #{arg2}
+    bad argument:
+    arg:
+      add: #{player}
+        no player:
+        player not found:
+        already in:
+        intern error:
+        success:
+      remove:
+        no player:
+        player not found:
+        already out:
+        intern error:
+        success:
+    no perm:
+      salary use:
+      salary add:
+      salary remove:
+
+notification:
+  #enable (true) or disable (false)
+  enabled:
+
+  prefix:
+
+  #delay (in minute) between 2 notifications message
+  delay:
+
+  #all recorded notifications message
+  all notif:
+  # - my notif
+
+  #here where you build your notification message
+  #example of a build:
+  build: #{prefix}, {player} (the player who will receive the notif)
+  #my notif:
+  # message: "Hey {player} don't forget to vote" [message to be sent to the player]
+  # hover: "Click here to vote" [message to be shown when the player pass his mouse on the message, this field isn't necessary]
+  # click: "http://myserver.site.com" [the website to be opened when the player will click on the message, this isn't necessary]
+
+reaction:
+  #enable (true) or disable (false) the module
+  enabled:
+
+  prefix:
+
+  #duration (in second) of a reaction game
+  time: 30
+
+  #time (in minute) between 2 reactions games
+  delay: 20
+
+  end message:
+  #command to execute for the first, second and third person to win the reaction game (without "/"),
+  #use {player} in command instead of the pseudo of the player.
+  command first:
+  command second:
+  command third:
+
+  #list all recorded reactions games
+  list:
+  # - my react
+
+  #here where you build your reaction game
+  #example of build:
+  build: #{prefix}
+  #my react:
+  # message: "{prefix} &bRewrite this word &eword" [message to announce that a new reaction game has started]
+  # word: "word" [word to be rewrite to win the reaction game]
+  # win: "{prefix} &3{player} has rewrote the word in {time} s" [message to announce that a player has won]
+  # nowin: {prefix} &c&oNo one has wrote the word" [message to announce that no one has won the reaction game]
+
+
+  message: #{prefix}, {sender}
+    miss argument:
+    no command found:
+
+    arg:
+      top: #{maxpage}, {putpage}
+        empty list:
+        not valid page:
+        max page:
+        success:
+
+        #{player}, {avg time}, {pos1}, {pos2}, {pos3}, {total part}, {pos}
+        line:
+      start:
+        success:
+        already react:
+      me:
+        only player:
+        not found:
+        success: #{avg time}, {pos1}, {pos2}, {pos3}, {total part}
+      info:
+        miss arg:
+        not found:
+        success: #{player}, {avg time}, {pos1}, {pos2}, {pos3}, {total part}
+
+    no perm: #{perm}
+      reaction use:
+      reaction see top:
+      reaction start:
+      reaction see me:
+
+
