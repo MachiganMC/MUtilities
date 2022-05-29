@@ -24,12 +24,12 @@
 #
 #
 #The plugin use "intern variable" allowing you to personnalise your messages. Each variable name is between "{" and "}"
-#(e.g.: "{player}"). Hers values depend on the situation and all can't use everywhere, but here is the mainly used :
+#(e.g.: "{player}"). Values depending on the situation and all can't be used everywhere, but here is the mainly used :
 #  {prefix} : return the prefix of the module
 #  {sender} : return the sender name of the command
 #  {perm} : return the name of the permission that the player doesn't have to use a command
 #
-#Every intern variable allowed to be written is specified at each field (sometimes parent, so the children field of this field can use it)
+#Every intern variable allowed to be written is specified in each field (sometimes parent, so the children field of this field can use it)
 #Example :
 #
 #  create:
