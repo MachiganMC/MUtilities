@@ -2,7 +2,7 @@
 
 
 ## Welcome :
-***
+
 Welcome to the official GitHub of the plugin **MUtilities** !
 
 Here you'll find a little presentation of the plugin,
@@ -13,7 +13,7 @@ additional files.
 ***
 
 ## Presentation :
-***
+
 **MUtilities** is a plugin composed of several "*modules*". Each module is a little
 plugin independent of other modules. So if you don't want to use some module, juste 
 disable them and the plugin in the configuration file.
@@ -34,7 +34,7 @@ permissions etc...*) in the
 ***
 
 ## Dependencies :
-***
+
 * The plugin offers PlaceHolders for
 [PlaceHolderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)
   (*go to PlaceHolders section for more information*). So he requires the plugin, if you
