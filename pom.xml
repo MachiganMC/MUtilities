@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>MUtilities</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>be.machigan</groupId>
+    <artifactId>mutilities</artifactId>
+    <version>1.0.0</version>
+    <name>MUtilities</name>
 
     <build>
         <resources>

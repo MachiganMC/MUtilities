@@ -1,6 +1,5 @@
 package be.machigan.mutilities.auction;
 
-import be.machigan.mutilities.survey.GUIAuction;
 import be.machigan.mutilities.utils.Const;
 import be.machigan.mutilities.utils.Tools;
 import org.bukkit.Bukkit;

@@ -7,14 +7,12 @@ import be.machigan.mutilities.survey.Survey;
 import be.machigan.mutilities.task.Task;
 import be.machigan.mutilities.utils.Const;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.UUID;
 
 public class PapiMUtils extends PlaceholderExpansion {
 
@@ -45,11 +43,24 @@ public class PapiMUtils extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player p, String params) {
+        if (p == null) {
+            if (params.contains("colorname") || params.contains("react") ||params.contains("task")) {
+                return null;
+            }
+            return getResult(null, params);
+        }
+
         return getResult(p.getUniqueId().toString(), params);
     }
 
     @Override
     public String onRequest(OfflinePlayer p, String params) {
+        if (p == null) {
+            if (params.contains("colorname") || params.contains("react") ||params.contains("task")) {
+                return null;
+            }
+            return getResult(null, params);
+        }
         return getResult(p.getUniqueId().toString(), params);
     }
 
@@ -76,8 +87,8 @@ public class PapiMUtils extends PlaceholderExpansion {
             }
             switch (params.toLowerCase()) {
                 case "auction_bid": return Double.toString(Auction.bid);
-                case "auction_bidder": return Bukkit.getOfflinePlayer(UUID.fromString(Auction.bidder)).getName();
-                case "auction_creator": return Bukkit.getOfflinePlayer(UUID.fromString(Auction.creator)).getName();
+                case "auction_bidder": return Auction.bidder;
+                case "auction_creator": return Auction.creator;
                 case "auction_item": return Auction.item.toString();
                 default: return null;
             }

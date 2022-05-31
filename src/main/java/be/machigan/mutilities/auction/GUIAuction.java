@@ -1,6 +1,5 @@
-package be.machigan.mutilities.survey;
+package be.machigan.mutilities.auction;
 
-import be.machigan.mutilities.auction.Auction;
 import be.machigan.mutilities.utils.Tools;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

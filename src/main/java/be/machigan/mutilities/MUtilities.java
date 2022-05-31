@@ -22,7 +22,7 @@ import be.machigan.mutilities.salary.CommandSalary;
 import be.machigan.mutilities.salary.Salary;
 import be.machigan.mutilities.salary.TabSalary;
 import be.machigan.mutilities.survey.CommandSurvey;
-import be.machigan.mutilities.survey.GUIAuction;
+import be.machigan.mutilities.auction.GUIAuction;
 import be.machigan.mutilities.survey.Survey;
 import be.machigan.mutilities.survey.TabSurvey;
 import be.machigan.mutilities.tab.TabMutils;
