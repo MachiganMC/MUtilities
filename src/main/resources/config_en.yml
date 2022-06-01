@@ -80,7 +80,7 @@ mutils:
         no exist: "{prefix} &bThe module &3{arg} &bdoesn't exist"
         no prefix: "{prefix} &bYou didn't wrote the futur prefix of the module &6{arg}"
         #{new prefix}
-        success: "{prefix} &bThe new prefix of the module &6{arg} &bis now &b{new prefix}"
+        success: "{prefix} &bThe new prefix of the module &6{arg} &bis now &r{new prefix}"
       reloadconfig:
         success: "{prefix} &bThe plugin has taken the new configuration"
       enable:

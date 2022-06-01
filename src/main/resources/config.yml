@@ -81,7 +81,7 @@ mutils:
         no exist: "{prefix} &bThe module &3{arg} &bdoesn't exist"
         no prefix: "{prefix} &bYou didn't wrote the futur prefix of the module &6{arg}"
         #{new prefix}
-        success: "{prefix} &bThe new prefix of the module &6{arg} &bis now &b{new prefix}"
+        success: "{prefix} &bThe new prefix of the module &6{arg} &bis now &r{new prefix}"
       reloadconfig:
         success: "{prefix} &bThe plugin has taken the new configuration"
       enable:
@@ -267,42 +267,42 @@ task:
       quant: 10
       time: 2 #in minute
       command: "minecraft:give {player} stone 64"
-      message: "{prefix} &bAchieve this task for a reward : &e&obreak 10 cobblestone"
+      message: "{prefix} &bAchieves this task for a reward : &e&obreak 10 cobblestone"
     task 2:
       action: "CRAFT"
       object: "STONE_PICKAXE"
       quant: 5
       time: 3
       command: "minecraft:give {player} iron_ingot 10"
-      message: "{prefix} &bAchieve this task for a reward : &e&ocraft 5 cobblestone pickaxe"
+      message: "{prefix} &bAchieves this task for a reward : &e&ocraft 5 cobblestone pickaxe"
     task 3:
       action: "KILL"
       object: "ZOMBIE"
       quant: 5
       time: 10
       command: "minecraft:give {player} diamond 5"
-      message: "{prefix} &bAchieve this task for a reward : &e&okill 10 zombies"
+      message: "{prefix} &bAchieves this task for a reward : &e&okill 10 zombies"
     task 4:
       action: "EAT"
       object: "COOKED_BEEF"
       quant: 5
       time: 3
       command: "minecraft:give {player} diamond 2"
-      message: "{prefix} &bAchieve this task for a reward : &e&eat 5 cooked beef"
+      message: "{prefix} &bAchieves this task for a reward : &e&eat 5 cooked beef"
     task 5:
       action: "BREAK"
       object: "BAMBOO"
       quant: 10
       time: 5
       command: "minecraft:give {player} bamboo 64"
-      message: "{prefix} &bAchieve this task for a reward : &e&obreak 10 bamboios"
+      message: "{prefix} &bAchieves this task for a reward : &e&obreak 10 bamboios"
     task 6:
       action: "CRAFT"
       object: "ORANGE_CARPET"
       quant: 20
       time: 10
       command: "minecraft:give {player} orange_wool 40"
-      message: "{prefix} &bAchieve this task for a reward : &e&ocraft 20 orange carpet"
+      message: "{prefix} &bAchieves this task for a reward : &e&ocraft 20 orange carpet"
 
   message: #{prefix}, {sender}
     miss argument: "{prefix} &c&oPlease, specify more arguments"

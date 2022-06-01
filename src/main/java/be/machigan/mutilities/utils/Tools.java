@@ -77,7 +77,12 @@ public class Tools {
     }
 
     public static String configColor(String path) {
-        return replaceColor(Const.CONFIG.getString(path));
+        try {
+            return replaceColor(Const.CONFIG.getString(path));
+        } catch (NullPointerException ignored) {
+            Tools.log("Warning, the field \"" + path + "\" is empty in the configuration file", Const.LOG_SEVERE);
+            return replaceColor(Const.PREFIX + "&4Missing section &c&o" + path + " &4in the configuration file");
+        }
     }
 
     public static String getUUID(String name) throws IOException, ParseException {

@@ -149,7 +149,7 @@ permissions:
     description: allow player to disable a module
     default: op
   mutils.survey.use:
-    description: allow playe to use the command /survey
+    description: allow player to use the command /survey
     default: true
   mutils.survey.create:
     description: allow player to create survey
@@ -179,7 +179,7 @@ permissions:
     description: allow player to see his stats
     default: true
   mutils.task.info:
-    description: allow player to sees stats of other player
+    description: allow player to see stats of other player
     default: true
   mutils.task.start:
     description: allow player to start a new task game
@@ -203,7 +203,7 @@ permissions:
     description: allow player to stop an auction
     default: op
   mutils.salary.use:
-    description: allow player to use the cmmande /salary
+    description: allow player to use the command /salary
     default: op
   mutils.salary.add:
     description: allow player to add a player to a salary
